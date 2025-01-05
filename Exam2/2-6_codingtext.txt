@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+vector<string> solution(vector<string> quiz) {
+    vector<string> answer;
+    
+    stringstream ss;
+    int x = 0, y = 0, z = 0;
+    string op("");
+    string eq("");
+    
+    for(int i = 0; i < quiz.size(); ++i) {
+        ss.clear();
+        ss.str(quiz.at(i));
+        ss >> x >> op >> y >> eq >> z;
+        if(op == "+") {
+            if((x + y) == z) answer.push_back("O");
+            else answer.push_back("X");
+        }
+        
+        if(op == "-") {
+            if((x - y) == z) answer.push_back("O");
+            else answer.push_back("X");
+        }
+    }
+    
+    return answer;
+}

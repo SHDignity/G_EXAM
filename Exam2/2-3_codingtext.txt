@@ -1,0 +1,83 @@
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+int solution(int a, int b, int c, int d) {
+	vector<int> v = { a, b, c, d };
+	map<int, int> m;
+
+	//숫자/횟수를 map의 key/value로 저장
+	for (int i = 0; i < v.size(); ++i) {
+		m[v[i]]++;
+	}
+
+	//map m의 value값이 4인 경우
+	if (m.size() == 1) {
+		return 1111 * d;
+	}
+	//map m의 value값이 3, 1 혹은 2, 2 인 경우
+	else if (m.size() == 2) {
+		int key3 = 0, key1 = 0;
+		int key2_1 = 0, key2_2 = 0;
+		for (map<int, int>::iterator it = m.begin(); it != m.end(); ++it) {
+			if (it->second == 3) {
+				key3 = it->first;
+			}
+			else if (it->second == 2) {
+				if (key2_1 == 0) {
+					key2_1 = it->first;
+				}
+				else {
+					key2_2 = it->first;
+				}
+			}
+			else {
+				key1 = it->first;
+			}
+		}
+
+		if (key3 != 0 && key1 != 0) {
+			return (10 * key3 + key1) * (10 * key3 + key1);
+		}
+
+		if (key2_1 != 0 && key2_2 != 0) {
+			return (key2_1 + key2_2) * abs(key2_1 - key2_2);
+		}
+	}
+	//map m의 value값이 2, 1, 1 인 경우 
+	else if (m.size() == 3) {
+		int key2 = 0, key1_1 = 0, key1_2 = 0;
+		for (map<int, int>::iterator it = m.begin(); it != m.end(); ++it) {
+			if (it->second == 2) {
+				key2 = it->first;
+			}
+			else if (it->second == 1) {
+				if (key1_1 == 0) {
+					key1_1 = it->first;
+				}
+				else {
+					key1_2 = it->first;
+				}
+			}
+		}
+		return key1_1 * key1_2;
+	}
+	//map ma의 value값이 1, 1, 1, 1 인 경우
+	else if (m.size() == 4) {
+		int min = 0;
+		for (map<int, int>::iterator it = m.begin(); it != m.end(); ++it) {
+			if (it == m.begin())
+				min = it->first;
+			else {
+				if (min > it->first) {
+					min = it->first;
+				}
+			}
+		}
+		return min;
+	}
+
+	return 0;
+}

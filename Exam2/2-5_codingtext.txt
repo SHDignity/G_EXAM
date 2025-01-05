@@ -1,0 +1,28 @@
+#include <string>
+#include <vector>
+#include <cfloat>
+
+using namespace std;
+
+float calcSlope(vector<int> dot1, vector<int> dot2) {
+    float slope = 0.f;
+    if(dot1[0] == dot2[0]) { //x좌표가 같으니 0으로 나누게 됨. 무한대값 return
+        return FLT_MAX;
+    }
+    slope = static_cast<float>(dot2[1] - dot1[1]) / static_cast<float>(dot2[0] - dot1[0]);
+    return slope;
+}
+
+int solution(vector<vector<int>> dots) {
+    int answer = 0;
+    if(calcSlope(dots[0], dots[1]) == calcSlope(dots[2], dots[3])) {
+        return 1; //기울기 같음
+    }
+    if(calcSlope(dots[0], dots[2]) == calcSlope(dots[3], dots[1])) {
+        return 1; //기울기 같음
+    }
+    if(calcSlope(dots[0], dots[3]) == calcSlope(dots[2], dots[1])) {
+        return 1; //기울기 같음
+    }
+    return answer;
+}
